@@ -1,0 +1,1 @@
+web: gunicorn nftBack_end.wsgi
