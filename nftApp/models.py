@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     verify_password = models.CharField(max_length=128)
+    wallet_address = models.CharField(max_length=255) 
 
     # Add a unique related_name for groups field
     groups = models.ManyToManyField(
