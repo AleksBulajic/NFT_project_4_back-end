@@ -16,11 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from nftApp.views import UserCreatView, IdentityCreateView
-
+from nftApp.views import (
+    UserListCreateView,
+    UserRetrieveUpdateDestroyView,
+    IdentityListCreateView,
+    IdentityRetrieveUpdateDestroyView
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/', UserCreatView.as_view(), name='user-create'),
-    path('identity/', IdentityCreateView.as_view(), name='identity-create')
+    path('users/', UserListCreateView.as_view(), name='user-list-create'),
+    path('users/<int:pk>/', UserRetrieveUpdateDestroyView.as_view(), name='user-retrieve-update-destroy'),
+    path('identities/', IdentityListCreateView.as_view(), name='identity-list-create'),
+    path('identities/<int:pk>/', IdentityRetrieveUpdateDestroyView.as_view(), name='identity-retrieve-update-destroy'),
 ]
