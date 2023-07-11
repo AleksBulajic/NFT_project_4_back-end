@@ -34,11 +34,17 @@ class User(AbstractUser):
 
 
 class Identity(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.CASCADE),
+    firstName = models.CharField(max_length=255)
+    lastName = models.CharField(max_length=255)
     photo = models.ImageField(upload_to='identity_photos/')
     description = models.TextField()
     nft_token_id = models.CharField(max_length=255)
+    address = models.CharField((""), max_length=50)
+    country = models.CharField(max_length=255)
+    dateOfBirth = models.CharField(max_length=255)
+    eyeColor = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
+

@@ -1,4 +1,5 @@
 CREATE DATABASE nftBack_end;
+CREATE DATABASE nftApp_user;
 
 CREATE USER nftBack_admin WITH PASSWORD 'password';
 

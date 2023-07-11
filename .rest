@@ -1,0 +1,9 @@
+POST http://127.0.0.1:8000/signup/
+Content-Type: application/json
+
+{
+    "username": "bill",
+    "password": "password",
+    "email": "mail@mail.com",
+    "wallet_address": "3025thyr0ewfgj89340yu"
+}

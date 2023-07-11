@@ -15,19 +15,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-\
 from django.urls import path
-from nftApp.views import (
-    UserListCreateView,
-    UserRetrieveUpdateDestroyView,
-    IdentityListCreateView,
-    IdentityRetrieveUpdateDestroyView
-)
+from nftApp import views
+
+
+
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+router = DefaultRouter()
+# router.register(r'users', views.UserListCreateView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', UserListCreateView.as_view(), name='user-list-create'),
-    path('users/<int:pk>/', UserRetrieveUpdateDestroyView.as_view(), name='user-retrieve-update-destroy'),
-    path('identities/', IdentityListCreateView.as_view(), name='identity-list-create'),
-    path('identities/<int:pk>/', IdentityRetrieveUpdateDestroyView.as_view(), name='identity-retrieve-update-destroy'),
+    path('users/', views.UserListCreateView.as_view(), name='user-list-create'),
+    path('users/<int:pk>/', views.UserRetrieveUpdateDestroyView.as_view(), name='user-retrieve-update-destroy'),
+    path('identities/', views.IdentityListCreateView.as_view(), name='identity-list-create'),
+    path('identities/<int:pk>/', views.IdentityRetrieveUpdateDestroyView.as_view(), name='identity-retrieve-update-destroy'),
+    path('', include(router.urls)),
+    path('login/', views.login),
+    path('signup/', views.signup)
 ]
+
