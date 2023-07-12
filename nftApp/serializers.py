@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import UserProfile, Identity
+from .models import UserProfile, Identity, TestToken
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -57,4 +57,8 @@ class IdentitySerializer(serializers.ModelSerializer):
     def get_user(self, obj):
         return obj.user.username
     
-    
+ 
+class TestTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TestToken
+        fields = '__all__'   
