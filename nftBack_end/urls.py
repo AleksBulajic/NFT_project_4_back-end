@@ -1,33 +1,19 @@
-"""
-URL configuration for nftBack_end project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
-\
-from django.urls import path
-from nftApp.views import (
-    UserListCreateView,
-    UserRetrieveUpdateDestroyView,
-    IdentityListCreateView,
-    IdentityRetrieveUpdateDestroyView
-)
+from django.urls import include, path
+from rest_framework.routers import DefaultRouter
+from nftApp.views import UserCreate, UserViewSet, IdentityListCreateView, UserRetrieveUpdateDestroyView, IdentityRetrieveUpdateDestroyView
+
+router = DefaultRouter()
+router.register(r'identity', IdentityListCreateView)
+router.register(r'users', UserViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', UserListCreateView.as_view(), name='user-list-create'),
+    path('api/', include(router.urls)),
+    path('register/', UserCreate.as_view(), name='user-register'),
+    path('api-auth/', include('rest_framework.urls')),
+    #  path('users/', UserViewSet.as_view(), name='user-list-create'),
     path('users/<int:pk>/', UserRetrieveUpdateDestroyView.as_view(), name='user-retrieve-update-destroy'),
-    path('identities/', IdentityListCreateView.as_view(), name='identity-list-create'),
-    path('identities/<int:pk>/', IdentityRetrieveUpdateDestroyView.as_view(), name='identity-retrieve-update-destroy'),
+    path('identities/', IdentityListCreateView.as_view(actions={'get': 'list', 'post': 'create'}), name='identity-list-create'),
+    path('identities/<int:pk>/', IdentityRetrieveUpdateDestroyView.as_view(), name='identity-retrieve-update-destroy')
 ]
