@@ -25,7 +25,24 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         UserProfile.objects.create(user=user, **profile_data)
         return user
+    
+    def update(self, instance, validated_data):
+        userprofile_data = validated_data.pop('userprofile', {})
+        userprofile = instance.userprofile
         
+        # Update user profile fields
+        for key, value in userprofile_data.items():
+            setattr(userprofile, key, value)
+        userprofile.save()
+
+        # Update user fields
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+
+        return instance
+
+
 class IdentitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Identity
