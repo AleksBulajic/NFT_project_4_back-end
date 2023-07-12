@@ -1,0 +1,27 @@
+POST http://127.0.0.1:8000/api/identity/
+Content-Type: application/json
+Authorization:: token 3282d9c5264b06b952e62f4ee1614940f1a9215e
+
+###
+
+POST http://127.0.0.1:8000/login/
+Content-Type: application/json
+
+{
+    "username": "santiago1",
+    "password": "password"
+}
+
+###
+
+POST http://127.0.0.1:8000/register/
+Content-Type: application/json
+
+{
+    "username": "santiago1",
+    "password": "password",
+    "email": "santiago@mail.com",
+        "userprofile": {
+        "metamask_wallet_address": "12947yrt3ht9egio324y5j90hobm"
+    }
+}
