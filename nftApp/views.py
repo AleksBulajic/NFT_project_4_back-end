@@ -1,16 +1,20 @@
 from django.shortcuts import render
-from rest_framework import viewsets, generics
+from rest_framework import viewsets, generics, status
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.decorators import action
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.status import HTTP_200_OK
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from .models import Identity
-from .serializers import UserSerializer, IdentitySerializer, UserProfileSerializer
+from .models import Identity, TestToken
+from .serializers import UserSerializer, IdentitySerializer, UserProfileSerializer, TestTokenSerializer
 from django.http import HttpResponse
 from django.views.generic import ListView
+from rest_framework.views import APIView
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
 # Create your views here.
 
@@ -46,8 +50,8 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def identity(self, request, pk=None):
         user = self.get_object()
-        donations = Identity.objects.filter(user=user)
-        serializer = Identity(donations, many=True)
+        identity = Identity.objects.filter(user=user)
+        serializer = Identity(identity, many=True)
         return Response(serializer.data)
     
 class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
@@ -64,3 +68,55 @@ class IdentityRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Identity.objects.all()
     serializer_class = IdentitySerializer
     permission_classes = [IsAuthenticated]
+
+
+# class TestTokenViewSet(viewsets.ModelViewSet):
+#     queryset = TestToken.objects.all()
+#     serializer_class = TestTokenSerializer
+# # Create your views here.
+# @api_view(["POST"])
+# def login(request):
+#     user = get_object_or_404(User, username=request.data['username'])
+#     if not user.check_password(request.data['password']):
+#         return Response("missing user", status=status.HTTP_404_NOT_FOUND)
+#     token, created = Token.objects.get_or_create(user=user)
+#     store_token, _ = TestToken.objects.get_or_create(token=token.key, user=user)
+
+#     serializer = UserSerializer(user)
+
+#     return Response({'token': store_token.token, 'user': serializer.data})
+
+
+class TestTokenViewSet(viewsets.ModelViewSet):
+    queryset = TestToken.objects.all()
+    serializer_class = TestTokenSerializer
+# Create your views here.
+@api_view(["POST"])
+def login(request):
+    user = get_object_or_404(User, username=request.data['username'])
+    if not user.check_password(request.data['password']):
+        return Response("missing user", status=status.HTTP_404_NOT_FOUND)
+    token, created = Token.objects.get_or_create(user=user)
+    store_token, _ = TestToken.objects.get_or_create(token=token.key, user=user)
+
+    serializer = UserSerializer(user)
+
+    return Response({'token': store_token.token, 'user': serializer.data})
+
+@api_view(["POST"])
+def signup(request):
+      serializer = UserSerializer(data=request.data)
+      if serializer.is_valid():
+            serializer.save()
+            user = User.objects.get(username=request.data['username'])
+            user.set_password(request.data['password'])
+            user.save()
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({'token': token.key, 'user': serializer.data})
+      return Response(serializer.errors, status=400)
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def test_token(request):
+    return Response("passed!")
