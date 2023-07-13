@@ -55,7 +55,7 @@ class IdentitySerializer(serializers.ModelSerializer):
         return super(IdentitySerializer, self).create(validated_data)
      
     def get_user(self, obj):
-        return obj.user.username
+        return obj.user.id
     
  
 class TestTokenSerializer(serializers.ModelSerializer):

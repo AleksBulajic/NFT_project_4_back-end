@@ -45,6 +45,7 @@ class CustomAuthToken(ObtainAuthToken):
             'user': serialized_user,
             'email': user.email
         }, status=HTTP_200_OK)
+        
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -70,17 +71,19 @@ class IdentityListCreateView(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         # Get the ID from the headers
         identity_id = self.request.META.get("HTTP_X_IDENTITY_ID")
-        
         # Set the ID in the serializer's context
         serializer.context["identity_id"] = identity_id
-
         # Call the serializer's save method
-        serializer.save()
+        serializer.save(user=self.request.user)
     
 class IdentityRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Identity.objects.all()
     serializer_class = IdentitySerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.kwargs['user']
+        return Identity.objects.filter(user=user)
+    
 
 
 # class TestTokenViewSet(viewsets.ModelViewSet):
