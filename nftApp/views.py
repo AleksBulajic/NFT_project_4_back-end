@@ -36,12 +36,15 @@ class CustomAuthToken(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
+        
+        user_serializer = UserSerializer(user)
+        serialized_user = user_serializer.data
+        
         return Response({
             'token': token.key,
-            'user_id': user.pk,
+            'user': serialized_user,
             'email': user.email
         }, status=HTTP_200_OK)
-
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -63,6 +66,16 @@ class IdentityListCreateView(viewsets.ModelViewSet):
     queryset = Identity.objects.all()
     serializer_class = IdentitySerializer
     permission_classes = [IsAuthenticated]
+    
+    def perform_create(self, serializer):
+        # Get the ID from the headers
+        identity_id = self.request.META.get("HTTP_X_IDENTITY_ID")
+        
+        # Set the ID in the serializer's context
+        serializer.context["identity_id"] = identity_id
+
+        # Call the serializer's save method
+        serializer.save()
     
 class IdentityRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Identity.objects.all()
@@ -99,10 +112,10 @@ def login(request):
     token, created = Token.objects.get_or_create(user=user)
     store_token, _ = TestToken.objects.get_or_create(token=token.key, user=user)
 
-    serializer = UserSerializer(user)
+    user_serializer = UserSerializer(user)
+    serialized_user = user_serializer.data
 
-    return Response({'token': store_token.token, 'user': serializer.data})
-
+    return Response({'token': store_token.token, 'user': serialized_user})
 @api_view(["POST"])
 def signup(request):
       serializer = UserSerializer(data=request.data)

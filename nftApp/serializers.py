@@ -53,7 +53,7 @@ class IdentitySerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data['user'] = self.context['request'].user
         return super(IdentitySerializer, self).create(validated_data)
-
+     
     def get_user(self, obj):
         return obj.user.username
     
