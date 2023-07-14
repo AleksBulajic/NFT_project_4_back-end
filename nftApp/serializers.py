@@ -44,6 +44,16 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class IdentitySerializer(serializers.ModelSerializer):
+    firstName = serializers.CharField(required=False, allow_blank=True)
+    lastName = serializers.CharField(required=False, allow_blank=True)
+    photo = serializers.ImageField(required=False)
+    description = serializers.CharField(required=False, allow_blank=True)
+    nft_token_id = serializers.CharField(required=False, allow_blank=True)
+    address = serializers.CharField(required=False, allow_blank=True)
+    country = serializers.CharField(required=False, allow_blank=True)
+    dateOfBirth = serializers.DateField(required=False, allow_null=True)
+    eyeColor = serializers.CharField(required=False, allow_blank=True)
+
     class Meta:
         model = Identity
         fields = [
@@ -52,10 +62,14 @@ class IdentitySerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data['user'] = self.context['request'].user
-        return super(IdentitySerializer, self).create(validated_data)
+        return super().create(validated_data)
      
-    def get_user(self, obj):
-        return obj.user.id
+    def update(self, instance, validated_data):
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+
+        return instance
     
  
 class TestTokenSerializer(serializers.ModelSerializer):
