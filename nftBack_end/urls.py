@@ -17,5 +17,6 @@ urlpatterns = [
     path('test-token/',test_token),
     path('users/<int:pk>/', UserRetrieveUpdateDestroyView.as_view(), name='user-retrieve-update-destroy'),
     path('identities/', IdentityListCreateView.as_view(actions={'get': 'list', 'post': 'create'}), name='identity-list-create'),
-    path('identities/<int:pk>/', IdentityRetrieveUpdateDestroyView.as_view(), name='identity-retrieve-update-destroy')
+    # path('identities/<int:user>/', IdentityRetrieveUpdateDestroyView.as_view(), name='identity-retrieve-update-destroy'),
+    path('identity/<int:pk>/', IdentityRetrieveUpdateDestroyView.as_view(), name='identity-retrieve-update-destroy')
 ]
