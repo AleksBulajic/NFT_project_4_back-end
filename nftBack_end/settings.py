@@ -90,24 +90,24 @@ WSGI_APPLICATION = 'nftBack_end.wsgi.application'
 
 DATABASE_URL=env('DATABASE_URL')
 
-# DATABASES = {
-#     'default':
-#         dj_database_url.config('DATABASE_URL')
-# }
-
-
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'nftback_end',
-        'USER': 'aleksandarbulajic',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '',
-
-    }
+    'default':
+        dj_database_url.config('DATABASE_URL')
 }
+
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'nftback_end',
+#         'USER': 'aleksandarbulajic',
+#         'PASSWORD': 'password',
+#         'HOST': 'localhost',
+#         'PORT': '',
+
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
