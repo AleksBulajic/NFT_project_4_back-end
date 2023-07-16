@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from .models import Identity, TestToken
-from .serializers import UserSerializer, IdentitySerializer, UserProfileSerializer, TestTokenSerializer
+from .serializers import UserSerializer, IdentitySerializer, TestTokenSerializer
 from django.http import HttpResponse
 from django.views.generic import ListView
 from rest_framework.views import APIView

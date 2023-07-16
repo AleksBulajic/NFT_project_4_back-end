@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
-from rest_framework.routers import DefaultRouter
-# from nftApp.views import UserCreate, UserViewSet, IdentityListCreateView, UserRetrieveUpdateDestroyView, IdentityRetrieveUpdateDestroyView, CustomAuthToken, TestTokenViewSet
+from rest_framework.routers import DefaultRouter # this line below this one was cancelled out
+#from nftApp.views import UserCreate, UserViewSet, IdentityListCreateView, UserRetrieveUpdateDestroyView, IdentityRetrieveUpdateDestroyView, CustomAuthToken, TestTokenViewSet
 from nftApp.views import *
 router = DefaultRouter()
 router.register(r'identity', IdentityListCreateView)
