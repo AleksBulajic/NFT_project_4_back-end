@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
-import django_heroku
+# import dj_database_url
+# import django_heroku
 import environ
 # Initialise environment variables
 env = environ.Env()
@@ -169,7 +169,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CSRF_COOKIE_HTTPONLY = False
 
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:8000/']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:8001/']
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]

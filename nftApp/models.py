@@ -25,7 +25,7 @@ class Identity(models.Model):
     eyeColor = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.name
+        return self.firstName
 
 class TestToken(models.Model):
     token = models.CharField(max_length=500)
