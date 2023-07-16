@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
         user.is_staff = True
         user.save()
         return user
-    
+
     def update(self, instance, validated_data):
         # Update user fields
         for key, value in validated_data.items():
@@ -25,6 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+
 
 
 class IdentitySerializer(serializers.ModelSerializer):
