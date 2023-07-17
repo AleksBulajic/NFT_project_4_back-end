@@ -6,15 +6,14 @@ from django.contrib.auth.models import User
 
 class Identity(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    firstName = models.CharField(max_length=255)
-    lastName = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     photo = models.CharField(max_length=255)
     description = models.TextField()
-    nft_token_id = models.CharField(max_length=255)
     address = models.CharField(max_length=50)
     country = models.CharField(max_length=255)
-    dateOfBirth = models.CharField(max_length=255)
-    eyeColor = models.CharField(max_length=255)
+    date_of_birth = models.CharField(max_length=255)
+    eye_color = models.CharField(max_length=255)
 
     def __str__(self):
         return self.firstName

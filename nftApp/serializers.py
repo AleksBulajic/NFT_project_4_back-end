@@ -32,7 +32,7 @@ class IdentitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Identity
         fields = [
-            'id', 'user', 'firstName', 'lastName', 'photo', 'description', 'nft_token_id', 'address', 'country', 'dateOfBirth', 'eyeColor' 
+            'id', 'user', 'first_name', 'last_name', 'photo', 'description',  'address', 'country', ' date_of_birth', 'eye_color' 
         ]
 
     def create(self, validated_data):
