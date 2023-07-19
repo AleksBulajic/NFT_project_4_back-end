@@ -20,7 +20,7 @@
 
 ### Models and Routing Table 
 
-- ![Models](https://i.imgur.com/MeHzK8t.png)
+- ![Models](https://i.imgur.com/L838B6z.png)
 
 - ![Routes](https://i.imgur.com/OLondcy.png)
 
