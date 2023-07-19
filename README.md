@@ -18,6 +18,20 @@
 
 - sqlparse
 
+### Models and Routing Table 
+
+- ![Models](https://i.imgur.com/MeHzK8t.png)
+
+- ![Routes](https://i.imgur.com/OLondcy.png)
+
+### Links 
+
+- [Notion-Board](https://www.notion.so/GA-project-4-1fe25414e4624c3c9c74f2c6cd844dbb)
+
+- [Deployed-App](https://calm-churros-9f4679.netlify.app/)
+
+- [FrontEnd-Repo](https://github.com/AleksBulajic/NFT_ID_front-end)
+
 ### Features 
 
 - AI Chatbox: Chat with our AI FinTech Guru for instant advice and support.
