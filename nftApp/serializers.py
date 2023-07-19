@@ -27,20 +27,28 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 
-
 class IdentitySerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(required=False, allow_blank=True)
+    last_name = serializers.CharField(required=False, allow_blank=True)
+    photo = serializers.CharField(required=False, allow_blank=True)
+    description = serializers.CharField(required=False, allow_blank=True)
+    address = serializers.CharField(required=False, allow_blank=True)
+    country = serializers.CharField(required=False, allow_blank=True)
+    date_of_birth = serializers.DateField(required=False, allow_null=True)
+    eye_color = serializers.CharField(required=False, allow_blank=True)
     class Meta:
         model = Identity
         fields = [
-            'id', 'user', 'first_name', 'last_name', 'photo', 'description', 'address', 'country', 'date_of_birth', 'eye_color' 
+            'id', 'user', 'first_name', 'last_name', 'photo', 'description', 'address', 'country', 'date_of_birth', 'eye_color'
         ]
-
     def create(self, validated_data):
         validated_data['user'] = self.context['request'].user
-        return super(IdentitySerializer, self).create(validated_data)
-     
-    def get_user(self, obj):
-        return obj.user.id
+        return super().create(validated_data)
+    def update(self, instance, validated_data):
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+        return instance
     
  
 class TestTokenSerializer(serializers.ModelSerializer):
